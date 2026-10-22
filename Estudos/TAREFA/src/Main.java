@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -25,16 +26,22 @@ public class Main {
 
             switch (opcao) {
                 case 1 -> {
-                    System.out.println("Digite o título:");
+                    System.out.println("Digite o o que fazer:");
                     String titulo = sc.nextLine();
-                    Tarefa t = new Tarefa("", proximoId);
+                    Tarefa t = new Tarefa(titulo, proximoId);
                     tarefas.add(t);
                     proximoId++;
                     System.out.println("Tarefa Adicionada! ");
                 }
 
                 case 2 -> {
-                    System.out.println("Você escolheu Listar");
+                    if (tarefas.isEmpty()) {
+                        System.out.println("Nenhuma tarefa encontrada");
+                    } else {
+                        for (Tarefa t : tarefas) {
+                            System.out.println(t.id + "-" + t.titulo + "-" + (t.concluida ? "Concluída" : "Pendente"));
+                        }
+                    }
                 }
 
                 case 0 -> {
