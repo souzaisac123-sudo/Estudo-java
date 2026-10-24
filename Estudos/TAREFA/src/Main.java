@@ -13,7 +13,9 @@ public class Main {
         do {
             System.out.println("1 - Adicionar");
             System.out.println("2 - Listar");
+            System.out.println("3 - Concluir");
             System.out.println("0 - sair");
+
 
             try {
                 opcao = Integer.parseInt(sc.nextLine());
@@ -43,6 +45,37 @@ public class Main {
                         }
                     }
                 }
+
+                case 3 -> {
+                    if (tarefas.isEmpty()) {
+                        System.out.println("Nenhuma tarefa encontrada");
+                    } else {
+                        for (Tarefa t : tarefas) {
+                            System.out.println(t.id + "- " + t.titulo + " - " + (t.concluida ? "Concluído" : "Pendente"));
+
+                        }
+                        System.out.println("Digite o Id da tarefa");
+                        try {
+                            int idBusca = Integer.parseInt(sc.nextLine());
+                            boolean achou = false;
+
+                            for (Tarefa t : tarefas) {
+                                if (t.id == idBusca) {
+                                    t.concluida = true;
+                                    achou = true;
+                                }
+                            }
+                            if (achou) {
+                                System.out.println("Tarefa concluída");
+                            } else {
+                                System.out.println("Id não encontrado.");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Digite apenas números");
+                        }
+                    }
+                }
+
 
                 case 0 -> {
                     System.out.println("SAINDO");
