@@ -14,6 +14,7 @@ public class Main {
             System.out.println("1 - Adicionar");
             System.out.println("2 - Listar");
             System.out.println("3 - Concluir");
+            System.out.println("4 - Remover");
             System.out.println("0 - sair");
 
 
@@ -76,6 +77,29 @@ public class Main {
                     }
                 }
 
+                case 4 -> {
+                    if (tarefas.isEmpty()) {
+                        System.out.println("Nenhuma tarefa encontrada");
+                    } else {
+                        for (Tarefa t : tarefas) {
+                            System.out.println(t.id + "- " + t.titulo + " - " + (t.concluida ? "Concluído" : "Pendente"));
+
+                        }
+                        System.out.println("Digite o Id da tarefa");
+                        try {
+                            int idBusca = Integer.parseInt(sc.nextLine());
+                            boolean removeu = tarefas.removeIf(t -> t.id == idBusca);
+
+                            if (removeu) {
+                                System.out.println("Tarefa removida");
+                            } else {
+                                System.out.println("Id não encontrado.");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Digite apenas números");
+                        }
+                    }
+                }
 
                 case 0 -> {
                     System.out.println("SAINDO");
