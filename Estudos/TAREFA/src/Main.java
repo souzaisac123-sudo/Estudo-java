@@ -15,6 +15,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int opcao = -1;
+        GerenciadorDeTarefas gerenciador = new GerenciadorDeTarefas();
 
         do {
             System.out.println("\n--- GERENCIADOR DE TAREFAS ---");
@@ -42,50 +43,31 @@ public class Main {
                         System.out.println("O título não pode ficar vazio.");
                         break;
                     }
-
-                    Tarefa t = new Tarefa(titulo, proximoId);
-                    tarefas.add(t);
-                    proximoId++;
+                    gerenciador.adicionar(titulo);
 
                     System.out.println("Tarefa adicionada!");
                 }
 
                 case 2 -> {
-                    if (tarefas.isEmpty()) {
-                        System.out.println("Nenhuma tarefa encontrada.");
-                    } else {
-                        imprimirTarefas(tarefas);
-                    }
+                  gerenciador.listar();
                 }
 
                 case 3 -> {
-                    if (tarefas.isEmpty()) {
+                    if (gerenciador.estaVazio()) {
                         System.out.println("Nenhuma tarefa encontrada.");
                         break;
                     }
 
-                    imprimirTarefas(tarefas);
+                    gerenciador.listar();
                     System.out.print("Digite o ID da tarefa: ");
 
                     try {
                         int idBusca = Integer.parseInt(sc.nextLine());
-                        boolean achou = false;
+                        boolean achou = gerenciador.concluir(idBusca);
 
-                        for (Tarefa t : tarefas) {
-                            if (t.getId() == idBusca) {
-                                if (t.getConcluida()) {
-                                    System.out.println("Essa tarefa já foi concluída.");
-                                } else {
-                                    t.concluir();
-                                    System.out.println("Tarefa concluída!");
-                                }
-
-                                achou = true;
-                                break;
-                            }
-                        }
-
-                        if (!achou) {
+                        if (achou) {
+                            System.out.println("Tarefa concluída.");
+                        }else {
                             System.out.println("ID não encontrado.");
                         }
 
@@ -95,7 +77,7 @@ public class Main {
                 }
 
                 case 4 -> {
-                    if (tarefas.isEmpty()) {
+                    if (gerenciador.estaVazio()) {
                         System.out.println("Nenhuma tarefa encontrada.");
                         break;
                     }
@@ -105,9 +87,7 @@ public class Main {
 
                     try {
                         int idBusca = Integer.parseInt(sc.nextLine());
-
-                        boolean removeu =
-                                tarefas.removeIf(t -> t.getId() == idBusca);
+                        boolean removeu = gerenciador.remover(idBusca);
 
                         if (removeu) {
                             System.out.println("Tarefa removida!");
